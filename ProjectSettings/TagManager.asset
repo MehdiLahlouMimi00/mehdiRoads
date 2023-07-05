@@ -10,6 +10,8 @@ TagManager:
   - Road
   - Platforms
   - Car
+  - Tree
+  - Game Overlay
   layers:
   - Default
   - TransparentFX

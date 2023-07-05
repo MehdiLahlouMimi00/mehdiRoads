@@ -7,7 +7,11 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
-    private GameState State = GameState.MainMenu;
+    private GameState State ;
+
+    public GameObject overlay;
+    public GameObject loseScreen;
+    public GameObject menuUI;
 
 
     public enum GameState
@@ -15,15 +19,15 @@ public class GameManager : MonoBehaviour
         Loading,
         MainMenu,
         InGame,
-        Lose,
-        Win
+        Lose
     }
 
     private void Awake()
     {
         Instance = this;
-        //Instance.State = GameState.MainMenu;
-        // GameObject.FindWithTag("Menu UI").SetActive(false);
+        Instance.State = GameState.MainMenu;
+        GameObject.FindWithTag("Menu UI").SetActive(true);
+        GameObject.FindWithTag("Game Overlay").SetActive(false);
     }
 
 
@@ -40,37 +44,29 @@ public class GameManager : MonoBehaviour
 
             case GameState.MainMenu:
 
-                GameObject.FindWithTag("Menu UI").SetActive(true);
+                menuUI.SetActive(true);
                 break;
 
 
             case GameState.InGame:
-                GameObject.FindWithTag("Menu UI").SetActive(false);
+                menuUI.SetActive(false);
+                overlay.SetActive(true);
+                CameraManager.Instance.StartingAnimation();
                 MainLoop.isActive = true;
+                loseScreen.SetActive(false);
                 break;
 
 
             case GameState.Lose:
-                GameObject.FindWithTag("Lose Sceen").SetActive(true);
+                loseScreen.SetActive(true);
+                LoseScreen.Instance.SetUp();
                 break;
 
-            case GameState.Win:
-                GameObject.FindWithTag("Win Sceen").SetActive(true);
-                break;
+            
         }
 
     }
 
-
-
-
-
-    
-
-    void Update()
-    {
-        
-    }
 
 
 
